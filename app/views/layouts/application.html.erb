@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= yield(:page_title)%> | AirBnB</title>
+      <%= csrf_meta_tags %>
+      <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+      <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>  
+  </head>
+
+  <body>
+    <%= render 'layouts/navbar' %>
+
+  	<div class="container <%= controller_name %> <%= action_name %>" style="margin-top: 70px;" >
+
+      <%- if flash.any? %>
+        <% flash.each do |name, msg| %>
+          <div class="alert alert-info">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <%= msg %>
+          </div>
+        <% end %>
+      <% end %>
+
+      <% if user_signed_in? %>
+        <div class="row">  
+          <div class="col-sm-2" style="position: fixed; top: 70px; left: 0;">
+            <h5>Conversations</h5>
+            <ul>
+              <% current_user.chatrooms.each do |chatroom| %>
+                <li><%= link_to chatroom.name, chatroom, data: {behavior: "chatroom-link", chatroom_id: chatroom.id} %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      <% end %>  
+      <div class="row">
+        <div class="col-sm-10 col-sm-offset-2">
+    	    <%= yield %>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

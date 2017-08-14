@@ -1,0 +1,40 @@
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded fixed-top">
+  <div class="container">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href='/'>Air<span class='light'>BnB</span></a>
+
+    <div class="collapse navbar-collapse pull-right" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto pull-left">
+        <li class="nav-item">
+          <%#= link_to 'All categories', blog_tags_path, class: "nav-link #{yield(:categories)}" %>
+        </li>
+      </ul>
+      <ul class="navbar-nav pull-right">
+        <% if user_signed_in? %>
+          <li class="nav-item" id="round-image-30">
+            <%= image_tag current_user.avatar.url(:thumb) %>
+          </li>
+          <li class="nav-item">
+            <% if !current_user.name.blank? %>
+              <%= link_to current_user.name, edit_user_registration_path, class: "nav-link #{yield(:edit)}" %>
+            <% else %>
+              <%= link_to 'My profile', edit_user_registration_path, class: "nav-link #{yield(:edit)}" %>
+            <% end %> 
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Log out', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?' }, class: "nav-link" %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to 'Register', new_user_registration_path, class: "nav-link #{yield(:register)}" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Sign in', new_user_session_path, class: "nav-link #{yield(:signin)}" %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,38 @@
+#round-image-30 {
+    background-color: white;
+    border: 1px solid #d9d9d9;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    height: 40px;
+    width: 40px;
+    overflow: hidden;
+    text-align: center;
+    img { width: 100% }
+}
+
+#round-image-50 {
+    background-color: white;
+    border: 1px solid #d9d9d9;
+    border-radius: 50px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    height: 100px;
+    width: 100px;
+    overflow: hidden;
+    text-align: center;
+    img { width: 100% }
+}
+
+#round-image-200 {
+    background-color: white;
+    border: 1px solid #d9d9d9;
+    border-radius: 100px;
+    -moz-border-radius: 100px;
+    -webkit-border-radius: 100px;
+    height: 200px;
+    width: 200px;
+    overflow: hidden;
+    text-align: center;
+    img { width: 100% }
+}
