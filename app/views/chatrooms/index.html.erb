@@ -7,7 +7,7 @@
   </thead>
 
   <tbody>
-    <% @chatrooms.each do |chatroom| %>
+    <% current_user.chatrooms.each do |chatroom| %>
       <tr>
         <td><%= chatroom.name %></td>
         <td><%= link_to 'Show', chatroom %></td>
@@ -23,3 +23,61 @@
 <br>
 
 <%= link_to 'New Chatroom', new_chatroom_path %>
+
+<div class="row">
+  <div class="spacer"></div>
+  <div class="col-md-12">
+    <%= link_to new_chatroom_path do %>
+      <i class="fa fa-plus-circle" aria-hidden="true">  New message</i>
+    <% end %>
+    <div class="spacer"></div>
+  </div>
+  <div class="col-md-12 apple_pagination">
+    <%= will_paginate @chatrooms, container: false  %>
+  </div>
+  <div class="col-md-10">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <% @chatrooms.each do |chatroom|%>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="media">
+                <div class="media-left">
+                  <% if chatroom.chatroom_users.size > 2 %>
+                    <a href="#">
+                      <div class="round-image-50"><%= image_tag(current_user.avatar.url(:thumb))%>
+                      </div>
+                    </a>
+                  <% else %>  
+                    <a href="#">
+                      <div class="round-image-50"><%= current_user.avatar.url(:thumb) %></div>
+                    </a>
+                  <% end %>
+                </div>
+                <div class="media-body">
+                  <%= link_to chatroom_path(chatroom) do %>
+                    <h4 class="media-heading">
+                      <%= current_user.name %><small> <%=  chatroom.messages.last.created_at.strftime("%A, %b %d, %Y at %I:%M%p")%></small><br><br>
+                    </h4>
+                    <%= image_tag(current_user.avatar.url(:thumb), class: "round-image-30") %> <%= chatroom.messages.last.body %>
+                    <%# unread = c.is_unread?(current_user) %>
+                    <%# if unread %>
+                      <%#= c.count_messages %>
+                      <!-- <span class="label label-danger pull-right">Unread</span> -->
+                    <%# end %>
+                  <% end %>
+                </div>
+                <div class="media-right">
+                  <%= link_to chatroom_chatroom_users_path(chatroom), method: :delete, data: {:confirm => 'Are you sure?'} do %>
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+

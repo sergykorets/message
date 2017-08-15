@@ -4,7 +4,7 @@ class ChatroomsController < ApplicationController
   # GET /chatrooms
   # GET /chatrooms.json
   def index
-    @chatrooms = Chatroom.all
+    @chatrooms = current_user.chatrooms.paginate(:page => params[:page], :per_page => 6)
   end
 
   # GET /chatrooms/1
