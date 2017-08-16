@@ -1,33 +1,34 @@
 class ChatroomsController < ApplicationController
   before_action :set_chatroom, only: [:show, :edit, :update, :destroy]
 
-  # GET /chatrooms
-  # GET /chatrooms.json
   def index
     @chatrooms = current_user.chatrooms.paginate(:page => params[:page], :per_page => 6)
   end
 
-  # GET /chatrooms/1
-  # GET /chatrooms/1.json
   def show
+    @chatroom_user = current_user.chatroom_users.find_by(chatroom_id: @chatroom.id)
   end
 
-  # GET /chatrooms/new
   def new
     @chatroom = Chatroom.new
+    @chatroom.chatroom_users.new
   end
 
-  # GET /chatrooms/1/edit
   def edit
   end
 
-  # POST /chatrooms
-  # POST /chatrooms.json
   def create
-    @chatroom = Chatroom.new(chatroom_params)
-
+    @chatroom = current_user.chatrooms.new(chatroom_params)
+    user_ids = params['chatroom']['chatroom_users_attributes']["0"]["user_id"].reject(&:blank?)
+    if user_ids.size < 2 && chatroom_params[:name].blank?
+      @chatroom.name = current_user.email
+    end
     respond_to do |format|
       if @chatroom.save
+        @chatroom.chatroom_users.create(chatroom_id: @chatroom.id, user_id: current_user.id)
+        user_ids.each do |user_id|
+          @chatroom.chatroom_users.create(chatroom_id: @chatroom.id, user_id: user_id.to_i)
+        end
         format.html { redirect_to @chatroom, notice: 'Chatroom was successfully created.' }
         format.json { render :show, status: :created, location: @chatroom }
       else
@@ -37,8 +38,6 @@ class ChatroomsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /chatrooms/1
-  # PATCH/PUT /chatrooms/1.json
   def update
     respond_to do |format|
       if @chatroom.update(chatroom_params)
@@ -51,8 +50,6 @@ class ChatroomsController < ApplicationController
     end
   end
 
-  # DELETE /chatrooms/1
-  # DELETE /chatrooms/1.json
   def destroy
     @chatroom.destroy
     respond_to do |format|
@@ -69,6 +66,6 @@ class ChatroomsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def chatroom_params
-      params.require(:chatroom).permit(:name)
+      params.require(:chatroom).permit(:name, :chatroom_users_attributes)
     end
 end

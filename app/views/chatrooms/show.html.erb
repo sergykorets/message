@@ -1,14 +1,20 @@
-<p>
-  <strong>Name:</strong>
-  <%= @chatroom.name %>
-</p>
+<div class="col-sm-8 message_section">
+  <div class="row">
 
-<div data-behavior='messages' data-chatroom-id='<%= @chatroom.id %>'>
-  <% @chatroom.messages.each do |message| %>
-    <%= render message %>
-  <% end %>
+    <div class="message_write">
+      <%= simple_form_for [@chatroom, Message.new] do |f| %>
+        <%= f.text_area :body, autofocus: true, class: 'form-control', placeholder: "Type a message... and press Enter" %>
+      <% end %>
+    </div>
+     
+    <div class="chat_area">
+      <ul class="list-unstyled">
+        <div data-behavior='messages' data-chatroom-id='<%= @chatroom.id %>'>
+          <% @chatroom.messages.order("created_at DESC").each do |message| %>
+            <%= render message %>
+          <% end %>
+        </div>
+      </ul>
+    </div>
+  </div>
 </div>
-
-<%= form_for [@chatroom, Message.new] do |f| %>
-  <%= f.text_area :body, rows: 1, autofocus: true, class: 'form-control' %>
-<% end %>

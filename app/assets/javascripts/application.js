@@ -13,5 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.turbolinks
+//= require selectize
 //= require bootstrap-sprockets
 //= require_tree .

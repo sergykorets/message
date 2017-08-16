@@ -1,1 +1,9 @@
-<div><strong><%= message.user.name %>:</strong><%= message.body %></div>
+<li class="left clearfix">
+  <span class="chat-img1 pull-left round-image-30">
+    <%= image_tag message.user.avatar.url(:thumb) %>
+  </span>
+  <div class="chat-body1 clearfix">
+    <p><%= message.body %></p>
+    <div class="chat_time pull-right"><%= message.created_at %></div>
+  </div>
+</li>

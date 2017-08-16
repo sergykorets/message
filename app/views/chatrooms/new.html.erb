@@ -1,5 +1,6 @@
-<h1>New Chatroom</h1>
+<% provide(:page_title, 'New conversation') %>
+<% provide(:new_chat, 'active') %>
+
+<h1 class="text-center">New conversation</h1>
 
 <%= render 'form', chatroom: @chatroom %>
-
-<%= link_to 'Back', chatrooms_path %>

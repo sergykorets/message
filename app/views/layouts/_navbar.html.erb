@@ -3,17 +3,17 @@
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href='/'>Air<span class='light'>BnB</span></a>
+    <a class="navbar-brand" href='/'>Messenger<span class='light'>test</span></a>
 
     <div class="collapse navbar-collapse pull-right" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto pull-left">
         <li class="nav-item">
-          <%#= link_to 'All categories', blog_tags_path, class: "nav-link #{yield(:categories)}" %>
+          <%= link_to 'New conversation', new_chatroom_path, class: "nav-link #{yield(:new_chat)}" %>
         </li>
       </ul>
       <ul class="navbar-nav pull-right">
         <% if user_signed_in? %>
-          <li class="nav-item" id="round-image-30">
+          <li class="nav-item round-image-30">
             <%= image_tag current_user.avatar.url(:thumb) %>
           </li>
           <li class="nav-item">

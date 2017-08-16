@@ -11,6 +11,8 @@ class User < ApplicationRecord
   has_many :chatrooms, through: :chatroom_users
   has_many :messages
 
+  scope :all_except, ->(user) { where.not(id: user) }  
+
   before_save :capitalize_name
 
   def capitalize_name

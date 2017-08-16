@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= yield(:page_title)%> | AirBnB</title>
+    <title><%= yield(:page_title)%> | Messenger</title>
       <%= csrf_meta_tags %>
       <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
       <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>  
@@ -21,19 +21,35 @@
         <% end %>
       <% end %>
 
-<!--         <div class="row">  
-          <div class="col-sm-2" style="position: fixed; top: 70px; left: 0;">
-            <h5>Conversations</h5>
-            <ul>
-              <%# current_user.chatrooms.each do |chatroom| %>
-                <li><%#= link_to chatroom.name, chatroom, data: {behavior: "chatroom-link", chatroom_id: chatroom.id} %></li>
-              <%# end %>
-            </ul>
+      <% if controller_name == 'chatrooms' && (action_name == 'index' || action_name == 'show') %>
+        <div class="row">
+          <div class="col-sm-2 chat_sidebar">
+            <div class="row">
+              <div class="member_list">
+                 <ul class="list-unstyled">
+                    <% current_user.chatrooms.each do |chatroom| %>
+                      <%= link_to chatroom, data: {behavior: "chatroom-link", chatroom_id: chatroom.id} do %>
+                        <li class="left clearfix">
+                           <span class="chat-img pull-left">
+                              <%= image_tag other_user_avatar(chatroom), class: "round-image-30" %>
+                           </span>
+                           <div class="chat-body clearfix">
+                              <div class="header_sec">
+                                <%= other_user_name(chatroom) %>
+                              </div>
+                           </div>
+                        </li>
+                      <% end %>
+                    <% end %>
+                 </ul>
+              </div>
+            </div>
           </div>
-        </div> -->
- 
-
-    	    <%= yield %>
+          <%= yield %>
+        </div>
+      <% else %>
+        <%= yield %> 
+      <% end %>
     </div>
   </body>
 </html>

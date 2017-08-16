@@ -1,11 +1,30 @@
 <%= simple_form_for(@chatroom) do |f| %>
-  <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :name %>
+  <% if @chatroom.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@chatroom.errors.count, "error") %> prohibited this conversion from being saved:</h2>
+
+      <ul>
+      <% @chatroom.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: 'form-control', placeholder: 'Required if you want to create conversation with multiple users' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :users %>
+    <%= f.simple_fields_for :chatroom_users do |builder| %>
+       <%= builder.collection_select :user_id, User.all_except(current_user), :id, :name, {}, {multiple: true, class: 'selectize', include_blank: false, include_hidden: false} %>
+    <% end %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.submit 'Create', class: 'btn btn-primary' %>
   </div>
 <% end %>
