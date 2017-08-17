@@ -63,13 +63,15 @@
 }
 .message_section {
   border: 1px solid #dddddd;
+  background-color: #f5f3f3;
 }
 .chat_area {
   float: left;
-  height: 500px;
+  height: 400px;
   overflow-x: hidden;
   overflow-y: auto;
   width: 100%;
+  background-color: white;
 }
 .chat_area li {
   padding: 14px 14px 0;
@@ -82,7 +84,7 @@
   margin-left: 50px;
 }
 .chat-body1 p {
-  background: #fbf9fa none repeat scroll 0 0;
+  background: #f5f3f3 none repeat scroll 0 0;
   padding: 10px;
 }
 .chat_area .admin_chat .chat-body1 {
@@ -113,4 +115,23 @@
   background: #428bca none repeat scroll 0 0;
   color: #fff;
   cursor:pointer;
+}
+.chatroom-header {
+  margin-top: 10px;
+}
+.chatroom-members {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+.list-unstyled a {
+  text-decoration: none;
+}
+
+.btn.btn-sm {
+  margin-top: 8px;
+  margin-right: 4px;
+}
+
+.inbox {
+  margin-right: 10px;
 }

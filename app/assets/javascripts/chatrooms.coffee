@@ -1,4 +1,4 @@
-handleVisibilityChange = ->
+handleClickChange = ->
   $strike = $(".strike")
   if $strike.length > 0
     chatroom_id = $("[data-behavior='messages']").data("chatroom-id")
@@ -6,7 +6,7 @@ handleVisibilityChange = ->
     $strike.remove()
 
 $(document).on 'ready turbolinks:load', ->
-  $(document).on "click", handleVisibilityChange
+  $(document).on "click", handleClickChange
 
   $('#new_message').on "keypress", (e) ->
     if e && e.keyCode == 13

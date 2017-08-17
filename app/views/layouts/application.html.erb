@@ -29,16 +29,29 @@
                  <ul class="list-unstyled">
                     <% current_user.chatrooms.each do |chatroom| %>
                       <%= link_to chatroom, data: {behavior: "chatroom-link", chatroom_id: chatroom.id} do %>
-                        <li class="left clearfix">
-                           <span class="chat-img pull-left">
-                              <%= image_tag other_user_avatar(chatroom), class: "round-image-30" %>
-                           </span>
-                           <div class="chat-body clearfix">
-                              <div class="header_sec">
-                                <%= other_user_name(chatroom) %>
-                              </div>
-                           </div>
-                        </li>
+                        <% if chatroom.name.include? "one-to-one" %>
+                          <li class="left clearfix">
+                             <span class="chat-img pull-left">
+                                <%= image_tag other_user_avatar(chatroom), class: "round-image-30" %>
+                             </span>
+                             <div class="chat-body clearfix">
+                                <div class="header_sec">
+                                  <%= other_user_name(chatroom) %>
+                                </div>
+                             </div>
+                          </li>
+                        <% else %>
+                          <li class="left clearfix">
+                             <span class="chat-img pull-left">
+                                <%= image_tag "http://icons.iconarchive.com/icons/graphicloads/100-flat-2/256/chat-2-icon.png", class: "round-image-30" %>
+                             </span>
+                             <div class="chat-body clearfix">
+                                <div class="header_sec">
+                                  <%= chatroom.name %>
+                                </div>
+                             </div>
+                          </li>                          
+                        <% end %>
                       <% end %>
                     <% end %>
                  </ul>

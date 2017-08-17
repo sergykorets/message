@@ -1,4 +1,5 @@
 class ChatroomsController < ApplicationController
+  include ApplicationHelper
   before_action :set_chatroom, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -7,10 +8,11 @@ class ChatroomsController < ApplicationController
 
   def show
     @chatroom_user = current_user.chatroom_users.find_by(chatroom_id: @chatroom.id)
+    @chatroom_user.update(last_read_at: Time.zone.now)
   end
 
   def new
-    @chatroom = Chatroom.new
+    @chatroom = current_user.chatrooms.new
     @chatroom.chatroom_users.new
   end
 
@@ -20,12 +22,12 @@ class ChatroomsController < ApplicationController
   def create
     @chatroom = current_user.chatrooms.new(chatroom_params)
     user_ids = params['chatroom']['chatroom_users_attributes']["0"]["user_id"].reject(&:blank?)
-    if user_ids.size < 2 && chatroom_params[:name].blank?
-      @chatroom.name = current_user.email
+    user_ids << current_user.id.to_s
+    if user_ids.size <= 2 && chatroom_params[:name].blank?
+      @chatroom.name = user_ids.sort.join + 'one-to-one'
     end
     respond_to do |format|
       if @chatroom.save
-        @chatroom.chatroom_users.create(chatroom_id: @chatroom.id, user_id: current_user.id)
         user_ids.each do |user_id|
           @chatroom.chatroom_users.create(chatroom_id: @chatroom.id, user_id: user_id.to_i)
         end
@@ -39,8 +41,17 @@ class ChatroomsController < ApplicationController
   end
 
   def update
+    users_in_chat = @chatroom.chatroom_users.map(&:user_id)
+    user_ids = []
+    params['chatroom']['chatroom_users_attributes'].permit!.to_h.values.each do |form|
+      user_ids << form["user_id"].reject(&:blank?)
+    end
+    new_users = user_ids.flatten.map(&:to_i) - users_in_chat
     respond_to do |format|
       if @chatroom.update(chatroom_params)
+        new_users.each do |user_id|
+          @chatroom.chatroom_users.create(chatroom_id: @chatroom.id, user_id: user_id.to_i)
+        end
         format.html { redirect_to @chatroom, notice: 'Chatroom was successfully updated.' }
         format.json { render :show, status: :ok, location: @chatroom }
       else

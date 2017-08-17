@@ -4,6 +4,9 @@
   </span>
   <div class="chat-body1 clearfix">
     <p><%= message.body %></p>
-    <div class="chat_time pull-right"><%= message.created_at %></div>
+    <div class="chat_time pull-right">
+      <%= fa_icon('clock-o', class: 'fa') %>
+    	<small><%= message.created_at.strftime("%I:%M%p %B %d, %Y") %></small>
+    </div>
   </div>
 </li>

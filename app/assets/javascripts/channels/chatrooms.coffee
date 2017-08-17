@@ -12,14 +12,16 @@ App.chatrooms = App.cable.subscriptions.create "ChatroomsChannel",
       if document.hidden
         if $(".strike").length == 0
           active_chatroom.prepend("<div class='strike'><span>Unread</span></div>")
-
         if Notification.permission == "granted"
           new Notification(data.name, {body: data.body})
       else
         App.last_read.update(data.chatroom_id)
       active_chatroom.prepend(data.message)
     else
-      $("[data-behavior='chatroom-link'][data-chatroom-id='#{data.chatroom_id}']").css("font-weight", "bold")
+      if Notification.permission == "granted"
+        new Notification(data.name, {body: data.body})
+      $("[data-behavior='chatroom-link'][data-chatroom-id='#{data.chatroom_id}']").css("color", "red")
+      $(".inbox").css("background-color", "red")
 
   send_message: (chatroom_id, message) ->
     @perform "send_message", {chatroom_id: chatroom_id, body: message}
