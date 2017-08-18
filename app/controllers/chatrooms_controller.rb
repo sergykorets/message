@@ -3,12 +3,11 @@ class ChatroomsController < ApplicationController
   before_action :set_chatroom, only: [:show, :edit, :update, :destroy]
 
   def index
-    @chatrooms = current_user.chatrooms.paginate(:page => params[:page], :per_page => 6)
+    @chatrooms = current_user.chatrooms
   end
 
   def show
     @chatroom_user = current_user.chatroom_users.find_by(chatroom_id: @chatroom.id)
-    @chatroom_user.update(last_read_at: Time.zone.now)
   end
 
   def new
@@ -29,7 +28,7 @@ class ChatroomsController < ApplicationController
     respond_to do |format|
       if @chatroom.save
         user_ids.each do |user_id|
-          @chatroom.chatroom_users.create(chatroom_id: @chatroom.id, user_id: user_id.to_i)
+          @chatroom.chatroom_users.create(chatroom_id: @chatroom.id, user_id: user_id.to_i, last_read_at: Time.zone.now)
         end
         format.html { redirect_to @chatroom, notice: 'Chatroom was successfully created.' }
         format.json { render :show, status: :created, location: @chatroom }

@@ -14,7 +14,11 @@
       <ul class="navbar-nav pull-right">
         <% if user_signed_in? %>
           <li class="nav-item">
-            <%= link_to 'Inbox', chatrooms_path, class: "nav-link #{yield(:inbox)} inbox" %>
+            <% if inbox(current_user) %>
+              <%= link_to 'Inbox', chatrooms_path, class: "nav-link #{yield(:inbox)} inbox", style: "background-color: red;" %>
+            <% else %>
+              <%= link_to 'Inbox', chatrooms_path, class: "nav-link #{yield(:inbox)} inbox" %>
+            <% end %>
           </li>
           <li class="nav-item round-image-30">
             <%= image_tag current_user.avatar.url(:thumb) %>

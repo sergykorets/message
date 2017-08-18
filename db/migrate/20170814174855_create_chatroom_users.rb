@@ -6,5 +6,6 @@ class CreateChatroomUsers < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
+    add_column :chatroom_users, :last_read_at, :datetime
   end
 end

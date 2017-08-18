@@ -4,6 +4,7 @@ handleClickChange = ->
     chatroom_id = $("[data-behavior='messages']").data("chatroom-id")
     App.last_read.update(chatroom_id)
     $strike.remove()
+    $("[data-behavior='chatroom-link'][data-chatroom-id='#{chatroom_id}']").css("color", "#0275d8")
 
 $(document).on 'ready turbolinks:load', ->
   $(document).on "click", handleClickChange

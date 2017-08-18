@@ -23,7 +23,6 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'jquery-rails'
-gem 'jquery-ui-rails'
 gem 'jquery-turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
@@ -37,11 +36,12 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootstrap', '~> 4.0.0.alpha3'
 gem 'paperclip'
 gem 'devise'
-gem 'will_paginate', '~> 3.1.0'
+gem 'kaminari'
 gem "font-awesome-rails"
 gem 'simple_form'
 gem "selectize-rails"
 gem 'redis'
+gem 'rails_admin', '~> 1.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

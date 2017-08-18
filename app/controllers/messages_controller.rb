@@ -4,9 +4,12 @@ class MessagesController < ApplicationController
   def create
     message = @chatroom.messages.new(message_params)
     message.user = current_user
-    message.save
-    MessageRelayJob.perform_later(message)
-    redirect_to chatroom_path(@chatroom)
+    if message.save
+      MessageRelayJob.perform_later(message)
+      redirect_to chatroom_path(@chatroom)
+    else
+      redirect_to :back, alert: 'Something went wrong'
+    end
   end
 
   private

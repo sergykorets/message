@@ -34,7 +34,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.0]
 
       t.timestamps null: false
     end
-
+    add_column :users, :admin, :boolean, default: false
     add_index :users, :email,                unique: true
     add_index :users, :reset_password_token, unique: true
     # add_index :authors, :confirmation_token,   unique: true

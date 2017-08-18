@@ -19,7 +19,7 @@
   <div class="form-group">
     <%= f.label :users %>
     <%= f.simple_fields_for :chatroom_users do |builder| %>
-       <%= builder.collection_select :user_id, User.all_except(current_user), :id, :name, {}, {multiple: true, class: 'selectize', placeholder: 'Add user to conversation'} %>
+       <%= builder.collection_select :user_id, User.all_except(current_user), :id, :name, {}, {multiple: true, class: 'selectize', placeholder: 'Add users to conversation'} %>
     <% end %>
   </div>
 

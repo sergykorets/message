@@ -28,29 +28,85 @@
               <div class="member_list">
                  <ul class="list-unstyled">
                     <% current_user.chatrooms.each do |chatroom| %>
-                      <%= link_to chatroom, data: {behavior: "chatroom-link", chatroom_id: chatroom.id} do %>
-                        <% if chatroom.name.include? "one-to-one" %>
-                          <li class="left clearfix">
-                             <span class="chat-img pull-left">
-                                <%= image_tag other_user_avatar(chatroom), class: "round-image-30" %>
-                             </span>
-                             <div class="chat-body clearfix">
-                                <div class="header_sec">
-                                  <%= other_user_name(chatroom) %>
-                                </div>
-                             </div>
-                          </li>
+                      <% unless chatroom.messages.last.nil? %>
+                        <% if current_user.chatroom_users.where(chatroom_id: chatroom.id).first.last_read_at < chatroom.messages.last.created_at %>
+                          <%= link_to chatroom, data: {behavior: "chatroom-link", chatroom_id: chatroom.id}, style: "color: red;" do %>
+                            <% if chatroom.name.include? "one-to-one" %>
+                              <li class="left clearfix">
+                                 <span class="chat-img pull-left">
+                                    <%= image_tag other_user_avatar(chatroom), class: "round-image-30" %>
+                                 </span>
+                                 <div class="chat-body clearfix">
+                                    <div class="header_sec">
+                                      <%= other_user_name(chatroom) %>
+                                    </div>
+                                 </div>
+                              </li>
+                            <% else %>
+                              <li class="left clearfix">
+                                 <span class="chat-img pull-left">
+                                    <%= image_tag "http://icons.iconarchive.com/icons/graphicloads/100-flat-2/256/chat-2-icon.png", class: "round-image-30" %>
+                                 </span>
+                                 <div class="chat-body clearfix">
+                                    <div class="header_sec">
+                                      <%= chatroom.name %>
+                                    </div>
+                                 </div>
+                              </li>                          
+                            <% end %>
+                          <% end %>
                         <% else %>
-                          <li class="left clearfix">
-                             <span class="chat-img pull-left">
-                                <%= image_tag "http://icons.iconarchive.com/icons/graphicloads/100-flat-2/256/chat-2-icon.png", class: "round-image-30" %>
-                             </span>
-                             <div class="chat-body clearfix">
-                                <div class="header_sec">
-                                  <%= chatroom.name %>
-                                </div>
-                             </div>
-                          </li>                          
+                          <%= link_to chatroom, data: {behavior: "chatroom-link", chatroom_id: chatroom.id} do %>
+                            <% if chatroom.name.include? "one-to-one" %>
+                              <li class="left clearfix">
+                                 <span class="chat-img pull-left">
+                                    <%= image_tag other_user_avatar(chatroom), class: "round-image-30" %>
+                                 </span>
+                                 <div class="chat-body clearfix">
+                                    <div class="header_sec">
+                                      <%= other_user_name(chatroom) %>
+                                    </div>
+                                 </div>
+                              </li>
+                            <% else %>
+                              <li class="left clearfix">
+                                 <span class="chat-img pull-left">
+                                    <%= image_tag "http://icons.iconarchive.com/icons/graphicloads/100-flat-2/256/chat-2-icon.png", class: "round-image-30" %>
+                                 </span>
+                                 <div class="chat-body clearfix">
+                                    <div class="header_sec">
+                                      <%= chatroom.name %>
+                                    </div>
+                                 </div>
+                              </li>                          
+                            <% end %>
+                          <% end %>  
+                        <% end %>  
+                      <% else %>
+                        <%= link_to chatroom, data: {behavior: "chatroom-link", chatroom_id: chatroom.id} do %>
+                          <% if chatroom.name.include? "one-to-one" %>
+                            <li class="left clearfix">
+                               <span class="chat-img pull-left">
+                                  <%= image_tag other_user_avatar(chatroom), class: "round-image-30" %>
+                               </span>
+                               <div class="chat-body clearfix">
+                                  <div class="header_sec">
+                                    <%= other_user_name(chatroom) %>
+                                  </div>
+                               </div>
+                            </li>
+                          <% else %>
+                            <li class="left clearfix">
+                               <span class="chat-img pull-left">
+                                  <%= image_tag "http://icons.iconarchive.com/icons/graphicloads/100-flat-2/256/chat-2-icon.png", class: "round-image-30" %>
+                               </span>
+                               <div class="chat-body clearfix">
+                                  <div class="header_sec">
+                                    <%= chatroom.name %>
+                                  </div>
+                               </div>
+                            </li>                          
+                          <% end %>
                         <% end %>
                       <% end %>
                     <% end %>

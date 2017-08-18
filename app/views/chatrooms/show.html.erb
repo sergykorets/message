@@ -18,8 +18,17 @@
   <div class="row">
 
     <div class="message_write">
-      <%= simple_form_for [@chatroom, Message.new] do |f| %>
-        <%= f.text_area :body, class: 'form-control', placeholder: "Type a message... and press Enter" %>
+      <%= simple_form_for [@chatroom, Message.new], remote: true do |f| %>
+        <div class="form-inputs" id="custom-search-input">
+          <div class="input-group">
+            <%= f.text_area :body, class: 'form-control', placeholder: "Type a message... and press Enter" %>
+            <span class="input-group-btn">
+              <%= button_tag type: 'submit', class: "btn btn-info btn-lg" do %>
+                <%= fa_icon('paper-plane-o', class: 'fa') %>
+              <% end %>
+            </span>
+          </div>
+        </div>
       <% end %>
     </div>
      
@@ -28,11 +37,9 @@
       <ul class="list-unstyled">
         <div data-behavior='messages' data-chatroom-id='<%= @chatroom.id %>'>
           <% @chatroom.messages.order("created_at DESC").each do |message| %>
-            <% unless @chatroom_user.last_read_at.nil? %>
-              <% if !unread_messages && @chatroom_user.last_read_at > message.created_at %>
-                <div class="strike"><span>Unread</span></div>
-                <% unread_messages = true %>
-              <% end %>
+            <% if !unread_messages && @chatroom_user.last_read_at > message.created_at %>
+              <div class="strike"><span>Unread</span></div>
+              <% unread_messages = true %>
             <% end %>
             <%= render message %>
           <% end %>
