@@ -1,24 +1,12 @@
-# README
+Preparation of project: 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+1. rake db:create
+2. rake db:migrate
+3. rake db:seed
 
-Things you may want to cover:
+Now you may login as Admin:
 
-* Ruby version
+login: admin@ukr.net
+pass: 111111
 
-* System dependencies
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
